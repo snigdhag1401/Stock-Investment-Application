@@ -1,10 +1,13 @@
 # My Personal Project
 
-## A subtitle
+## *Stock Investment Tool*
+This application will be a tool that allows the user to 
+keep track of their current and potential/future stock 
+investments. Users will be able to have important information 
+about multiple stocks gathered in the same place. This application
+is useful for anyone interested in investing in stocks. 
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+This project is of particular interest to me because I'm 
+personally interested in the stock market,
+and would find it very helpful to have an application like this. 
 
-An example of text with **bold** and *italic* fonts.  
