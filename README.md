@@ -8,6 +8,6 @@ about multiple stocks gathered in the same place. This application
 is useful for anyone interested in investing in stocks. 
 
 This project is of particular interest to me because I'm 
-personally interested in the stock market,
+personally interested in investing in the stock market,
 and would find it very helpful to have an application like this. 
 
