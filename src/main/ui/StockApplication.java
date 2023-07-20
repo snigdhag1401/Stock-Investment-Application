@@ -17,6 +17,7 @@ public class StockApplication {
         input = new Scanner(System.in);
     }
 
+    // REQUIRES: user input must be an integer value
     // MODIFIES: this
     // EFFECTS: runs stock application and processes user input
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
