@@ -22,6 +22,11 @@ class StockListTest {
     }
 
     @Test
+    public void testConstructor() {
+        assertEquals(0, testStockList.getSize());
+    }
+
+    @Test
     public void testAddStock() {
         testStockList.addStock(testStock1);
         assertTrue(testStockList.getStockItems().contains(testStock1));
@@ -31,8 +36,8 @@ class StockListTest {
     public void testAddStockMultiple() {
         testStockList.addStock(testStock1);
         testStockList.addStock(testStock2);
-        assertTrue(testStockList.containsStock(testStock1));
-        assertTrue(testStockList.containsStock(testStock2));
+        assertTrue(testStockList.getStockItems().contains(testStock1));
+        assertTrue(testStockList.getStockItems().contains(testStock2));
     }
 
     @Test
@@ -46,14 +51,37 @@ class StockListTest {
     public void testRemoveStock() {
         testStockList.addStock(testStock1);
         testStockList.removeStock(testStock1);
-        assertFalse(testStockList.containsStock(testStock1));
+        assertFalse(testStockList.getStockItems().contains(testStock1));
+    }
+
+    @Test
+    public void testRemoveStockMultiple() {
+        testStockList.addStock(testStock1);
+        testStockList.addStock(testStock2);
+        testStockList.addStock(testStock3);
+        testStockList.removeStock(testStock2);
+        assertFalse(testStockList.getStockItems().contains(testStock2));
     }
 
     @Test
     public void testContainsStock() {
-        assertFalse(testStockList.containsStock(testStock1));
+        assertFalse(testStockList.getStockItems().contains(testStock1));
         testStockList.addStock(testStock1);
-        assertTrue(testStockList.containsStock(testStock1));
+        assertTrue(testStockList.getStockItems().contains(testStock1));
+    }
+
+    @Test
+    public void testContainsStockWithAddAndRemoveStock() {
+        assertFalse(testStockList.getStockItems().contains(testStock1));
+        testStockList.addStock(testStock1);
+        assertTrue(testStockList.getStockItems().contains(testStock1));
+        testStockList.removeStock(testStock1);
+        assertFalse(testStockList.getStockItems().contains(testStock1));
+    }
+
+    @Test
+    public void testFindStockItemWithNoItem() {
+        assertNull(testStockList.findStockItem("Apple"));
     }
 
     @Test
@@ -75,14 +103,15 @@ class StockListTest {
         testStockList.addStock(testStock1);
         testStockList.addStock(testStock2);
         testStockList.addStock(testStock3);
-        assertTrue(testStockList.haveInvestedIn().contains(testStock1));
-        assertFalse(testStockList.haveInvestedIn().contains(testStock2));
-        assertTrue(testStockList.haveInvestedIn().contains(testStock3));
+        assertTrue(testStockList.haveInvestedIn().getStockItems().contains(testStock1));
+        assertFalse(testStockList.haveInvestedIn().getStockItems().contains(testStock2));
+        assertTrue(testStockList.haveInvestedIn().getStockItems().contains(testStock3));
+        assertEquals(2, testStockList.haveInvestedIn().getSize());
     }
 
     @Test
     public void testHaveInvestedInEmptyList() {
-        assertEquals(0, testStockList.haveInvestedIn().size());
+        assertEquals(0, testStockList.haveInvestedIn().getSize());
     }
 
     @Test
@@ -90,14 +119,15 @@ class StockListTest {
         testStockList.addStock(testStock1);
         testStockList.addStock(testStock2);
         testStockList.addStock(testStock3);
-        assertFalse(testStockList.notInvestedIn().contains(testStock1));
-        assertTrue(testStockList.notInvestedIn().contains(testStock2));
-        assertFalse(testStockList.notInvestedIn().contains(testStock3));
+        assertFalse(testStockList.notInvestedIn().getStockItems().contains(testStock1));
+        assertTrue(testStockList.notInvestedIn().getStockItems().contains(testStock2));
+        assertFalse(testStockList.notInvestedIn().getStockItems().contains(testStock3));
+        assertEquals(1, testStockList.notInvestedIn().getSize());
     }
 
     @Test
     public void testNotInvestedInEmptyList() {
-        assertEquals(0, testStockList.notInvestedIn().size());
+        assertEquals(0, testStockList.notInvestedIn().getSize());
     }
 
 }

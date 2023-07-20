@@ -8,7 +8,7 @@ public class StockList {
 
     // EFFECTS: creates a new, empty list of stocks
     public StockList() {
-        stockItems = new ArrayList<Stock>();
+        stockItems = new ArrayList<>();
     }
 
     // MODIFIES: this
@@ -22,11 +22,6 @@ public class StockList {
     // if stock not in list then returns false
     public boolean removeStock(Stock stock) {
         return stockItems.remove(stock);
-    }
-
-    // EFFECTS: returns true if given stock is in list, false otherwise
-    public boolean containsStock(Stock stock) {
-        return stockItems.contains(stock);
     }
 
     // EFFECTS: checks if a stock with given name is in list and returns the stock,
@@ -43,38 +38,30 @@ public class StockList {
     }
 
     // EFFECTS: returns list of all stocks that have been invested in
-    public ArrayList<Stock> haveInvestedIn() {
-        ArrayList<Stock> investedIn = new ArrayList<Stock>();
+    public StockList haveInvestedIn() {
+        StockList investedIn = new StockList();
         for (Stock stockItem : stockItems) {
             if (stockItem.getInvestmentStatus()) {
-                investedIn.add(stockItem);
+                investedIn.addStock(stockItem);
             }
         }
         return investedIn;
     }
 
     // EFFECTS: returns list of all stocks that haven't been invested in
-    public ArrayList<Stock> notInvestedIn() {
-        ArrayList<Stock> notInvested = new ArrayList<Stock>();
+    public StockList notInvestedIn() {
+        StockList notInvested = new StockList();
         for (Stock stockItem : stockItems) {
             if (!stockItem.getInvestmentStatus()) {
-                notInvested.add(stockItem);
+                notInvested.addStock(stockItem);
             }
         }
         return notInvested;
     }
 
-    public void displayStocksFromList() {
-        if (stockItems.isEmpty()) {
-            System.out.println("No stocks in the list.");
-        } else {
-            System.out.println("Stocks in the list: ");
-            for (Stock stock : stockItems) {
-                System.out.println(stock.getStockName() + " ("
-                        + stock.getTicker() + " ) - Invested: "
-                        + stock.getInvestmentStatus() + " , Share Price = " + stock.getSharePrice());
-            }
-        }
+    // EFFECTS: returns the number of stocks in the list of stocks
+    public int getSize() {
+        return stockItems.size();
     }
 
     public ArrayList<Stock> getStockItems() {
