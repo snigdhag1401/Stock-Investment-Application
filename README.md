@@ -17,3 +17,5 @@ and would find it very helpful to have an application like this.
 - As a user, I want to be able to mark which stocks I have already invested in
 - As a user, I want to be able to see which stocks I have invested in and which I haven't
 - As a user, I want to be able to record the cost of 1 share in a particular stock
+- As a user, I want to be able to save my stock list to file (if I so choose)
+- As a user, I want to be able to load my stock list from file (if I so choose)
