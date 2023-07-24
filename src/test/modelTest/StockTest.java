@@ -21,4 +21,10 @@ public class StockTest {
         assertTrue(testStock.getInvestmentStatus());
     }
 
+    @Test
+    public void testSetInvestmentStatus() {
+        testStock.setInvestmentStatus(false);
+        assertFalse(testStock.getInvestmentStatus());
+    }
+
 }
