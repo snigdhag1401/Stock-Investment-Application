@@ -1,0 +1,17 @@
+{
+  "stockItems": [
+    {
+      "hasInvested": true,
+      "ticker": "AAPL",
+      "sharePrice": 5.00,
+      "name": "Apple"
+    },
+    {
+      "hasInvested": false,
+      "ticker": "TSLA",
+      "sharePrice": 4.00,
+      "name": "Tesla"
+    }
+  ],
+  "name": "My stock list"
+}

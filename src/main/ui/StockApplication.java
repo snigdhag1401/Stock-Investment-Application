@@ -2,19 +2,29 @@ package ui;
 
 import model.Stock;
 import model.StockList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Represents a stock investment application
 public class StockApplication {
+    private static final String JSON_STORE = "./data/stocklist.json";
     private StockList stockList;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: creates a Stock Application with an empty stockList
     // and initializes Scanner
-    public StockApplication() {
-        stockList = new StockList();
+    public StockApplication() throws FileNotFoundException {
+        stockList = new StockList(" Snigdha's stocklist");
         input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        runStockApp();
     }
 
     // REQUIRES: user input must be an integer value
@@ -43,6 +53,12 @@ public class StockApplication {
                     displayStocks();
                     break;
                 case 5:
+                    saveStockList();
+                    break;
+                case 6:
+                    loadStockList();
+                    break;
+                case 7:
                     exit = true;
                     break;
                 default:
@@ -59,7 +75,9 @@ public class StockApplication {
         System.out.println("2. Remove a stock");
         System.out.println("3. Modify a stock");
         System.out.println("4. Display stocks");
-        System.out.println("5. Exit");
+        System.out.println("5. Save stock list to file");
+        System.out.println("6. Load stock list from file");
+        System.out.println("7. Exit");
         System.out.println("Please enter the number of your choice: ");
     }
 
@@ -187,6 +205,29 @@ public class StockApplication {
                         + stock.getTicker() + " ) - Invested: "
                         + stock.getInvestmentStatus() + " , Share Price = " + stock.getSharePrice());
             }
+        }
+    }
+
+    // EFFECTS: saves the stocklist to file
+    private void saveStockList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(stockList);
+            jsonWriter.close();
+            System.out.println("Saved " + stockList.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads stocklist from file
+    private void loadStockList() {
+        try {
+            stockList = jsonReader.read();
+            System.out.println("Loaded " + stockList.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 

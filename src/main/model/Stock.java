@@ -4,7 +4,10 @@ package model;
 // the user has invested in the stock. User can also optionally add the
 // share price of the stock.
 
-public class Stock {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Stock implements Writable {
     private String name;
     private String ticker;
     private boolean hasInvested;
@@ -41,6 +44,16 @@ public class Stock {
 
     public void setSharePrice(double sharePrice) {
         this.sharePrice = sharePrice;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("ticker", ticker);
+        json.put("hasInvested", hasInvested);
+        json.put("sharePrice", sharePrice);
+        return json;
     }
 
 }

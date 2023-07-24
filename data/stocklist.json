@@ -1,0 +1,9 @@
+{
+    "stockItems": [{
+        "hasInvested": true,
+        "ticker": "aapl",
+        "sharePrice": 0,
+        "name": "apple"
+    }],
+    "name": " Snigdha's stocklist"
+}

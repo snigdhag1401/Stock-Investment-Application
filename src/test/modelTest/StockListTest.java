@@ -15,7 +15,7 @@ class StockListTest {
 
     @BeforeEach
     public void runBefore() {
-        testStockList = new StockList();
+        testStockList = new StockList("test Stocklist");
         testStock1 = new Stock("Apple", "AAPL", true);
         testStock2 = new Stock("Samsung", "KRX", false);
         testStock3 = new Stock("Tesla", "TSLA", true);
