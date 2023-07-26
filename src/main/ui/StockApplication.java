@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 // Represents a stock investment application
+// The following code was written by referring to the Teller App program
 public class StockApplication {
     private static final String JSON_STORE = "./data/stocklist.json";
     private StockList stockList;

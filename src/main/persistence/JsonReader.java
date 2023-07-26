@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // Represents a reader that reads StockList from JSON data stored in file
+// The following code was written by referring to the provided JsonSerializationDemo
 public class JsonReader {
     private String source;
 
