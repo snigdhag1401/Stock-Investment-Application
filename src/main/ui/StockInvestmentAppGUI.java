@@ -9,9 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.swing.JFrame;
 
+// Represents a stock investment app with a graphical user interface
 public class StockInvestmentAppGUI extends JFrame {
     private StockList stocks;
     private DefaultListModel<String> listModel;
@@ -29,8 +32,18 @@ public class StockInvestmentAppGUI extends JFrame {
     private JButton viewAllButton;
     private JPanel panel;
 
+    private ImageIcon smallIcon;
+    private ImageIcon smallAddIcon;
+    private ImageIcon smallSaveIcon;
+    private ImageIcon smallLoadIcon;
+    private ImageIcon smallViewInvestedIcon;
+    private ImageIcon smallViewAllIcon;
+
+    // MODIFIES: this
+    // EFFECTS: creates the graphical user interface for the stock app,
+    // including a window and buttons
     public StockInvestmentAppGUI() {
-        initializeVals();
+        initializeValues();
 
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -40,14 +53,17 @@ public class StockInvestmentAppGUI extends JFrame {
         tickerField = new JTextField();
         investmentCheckBox = new JCheckBox();
 
-        inputPanel.add(new JLabel("Stock name:"));
+        createImages();
+
+        inputPanel.add(new JLabel("Stock name:", smallIcon, JLabel.CENTER));
         inputPanel.add(nameField);
-        inputPanel.add(new JLabel("Ticker Symbol:"));
+        inputPanel.add(new JLabel("Ticker Symbol:",  smallIcon, JLabel.CENTER));
         inputPanel.add(tickerField);
-        inputPanel.add(new JLabel("Investment Status:"));
+        inputPanel.add(new JLabel("Investment Status:",  smallIcon, JLabel.CENTER));
         inputPanel.add(investmentCheckBox);
 
-        createButtons();
+        createAddAndSaveStockButtons();
+        createLoadAndViewButtons();
 
         panel.add(new JScrollPane(stockList), BorderLayout.CENTER);
         panel.add(inputPanel, BorderLayout.SOUTH);
@@ -56,12 +72,40 @@ public class StockInvestmentAppGUI extends JFrame {
 
         setTitle("Stock Investment Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400,400);
+        setSize(500,500);
         setLocationRelativeTo(null);
         add(panel);
     }
 
-    public void initializeVals() {
+    public void createImages() {
+        ImageIcon icon = new ImageIcon("data/stock-market-vector-icon-small.jpg",
+                "a stock icon");
+        smallIcon = new ImageIcon(getScaledImage(icon.getImage(), 32, 32));
+
+        ImageIcon addIcon = new ImageIcon("data/addStockIcon.jpg",
+                "an add stock icon");
+        smallAddIcon = new ImageIcon(getScaledImage(addIcon.getImage(), 32,32));
+
+        ImageIcon saveIcon = new ImageIcon("data/saveStockIcon.jpg",
+                "a save stock icon");
+        smallSaveIcon = new ImageIcon(getScaledImage(saveIcon.getImage(), 32, 32));
+
+        ImageIcon loadIcon = new ImageIcon("data/loadStockIcon.jpg",
+                "a load stock icon");
+        smallLoadIcon = new ImageIcon(getScaledImage(loadIcon.getImage(), 32, 32));
+
+        ImageIcon viewInvestedIcon = new ImageIcon("data/viewInvestedStocksIcon.jpg",
+                "a view invested stock icon");
+        smallViewInvestedIcon = new ImageIcon(getScaledImage(viewInvestedIcon.getImage(), 32, 32));
+
+        ImageIcon viewAllIcon = new ImageIcon("data/viewAllStocksIcon.jpg",
+                "a view all stock icon");
+        smallViewAllIcon = new ImageIcon(getScaledImage(viewAllIcon.getImage(), 32, 32));
+    }
+
+    // EFFECTS: creates an empty stocklist and its list model,
+    // and initializes JSON elements
+    public void initializeValues() {
         stocks = new StockList("My stocklist");
         listModel = new DefaultListModel<>();
         stockList = new JList<>(listModel);
@@ -69,8 +113,18 @@ public class StockInvestmentAppGUI extends JFrame {
         jsonReader = new JsonReader(JSON_STORE);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public void createButtons() {
+    // EFFECTS: creates a new image with given width and height
+    private Image getScaledImage(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+        return resizedImg;
+    }
+
+    // EFFECTS: creates Add and Save buttons for the GUI
+    public void createAddAndSaveStockButtons() {
         addButton = new JButton("Add a stock");
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -78,6 +132,7 @@ public class StockInvestmentAppGUI extends JFrame {
                 addAStock();
             }
         });
+        addButton.setIcon(smallAddIcon);
 
         saveButton = new JButton("Save Stocks");
         saveButton.addActionListener(new ActionListener() {
@@ -86,7 +141,11 @@ public class StockInvestmentAppGUI extends JFrame {
                 saveStocksToFile();
             }
         });
+        saveButton.setIcon(smallSaveIcon);
+    }
 
+    // EFFECTS: creates Load and View buttons for the GUI
+    public void createLoadAndViewButtons() {
         loadButton = new JButton("Load Stocks");
         loadButton.addActionListener(new ActionListener() {
             @Override
@@ -94,6 +153,7 @@ public class StockInvestmentAppGUI extends JFrame {
                 loadStocksFromFile();
             }
         });
+        loadButton.setIcon(smallLoadIcon);
 
         viewInvestedButton = new JButton("View Invested Stocks");
         viewInvestedButton.addActionListener(new ActionListener() {
@@ -102,6 +162,7 @@ public class StockInvestmentAppGUI extends JFrame {
                 viewInvestedStocks();
             }
         });
+        viewInvestedButton.setIcon(smallViewInvestedIcon);
 
         viewAllButton = new JButton("View All Stocks");
         viewAllButton.addActionListener(new ActionListener() {
@@ -110,8 +171,11 @@ public class StockInvestmentAppGUI extends JFrame {
                 viewAllStocks();
             }
         });
+        viewAllButton.setIcon(smallViewAllIcon);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds all buttons to GUI
     public void addButtonsToPanel() {
         JPanel buttonPanel = new JPanel(new GridLayout(1, 5, 5, 5));
         buttonPanel.add(addButton);
@@ -122,16 +186,23 @@ public class StockInvestmentAppGUI extends JFrame {
         panel.add(buttonPanel, BorderLayout.NORTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new stock and adds it to list and to screen display,
+    // if stock already in list, doesn't add it again
     public void addAStock() {
         String name = nameField.getText();
         String tickerSymbol = tickerField.getText();
         boolean investmentStatus = investmentCheckBox.isSelected();
 
         Stock stock = new Stock(name, tickerSymbol, investmentStatus);
-        stocks.addStock(stock);
-        listModel.addElement(stock.getStockName() + " ("
-                + stock.getTicker() + " ) - Invested: "
-                + stock.getInvestmentStatus() + " , Share Price = " + stock.getSharePrice());
+        if (stocks.findStockItem(name) == null) {
+            stocks.addStock(stock);
+            listModel.addElement(stock.getStockName() + " ("
+                    + stock.getTicker() + " ) - Invested: "
+                    + stock.getInvestmentStatus() + " , Share Price = " + stock.getSharePrice());
+        } else {
+            JOptionPane.showMessageDialog(this, "Stock is already in list!");
+        }
 
         // Clear input fields after adding stock
         nameField.setText("");
@@ -139,6 +210,7 @@ public class StockInvestmentAppGUI extends JFrame {
         investmentCheckBox.setSelected(false);
     }
 
+    // EFFECTS: saves all stocks to file
     public void saveStocksToFile() {
         try {
             jsonWriter.open();
@@ -150,6 +222,8 @@ public class StockInvestmentAppGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads stocklist from file and displays it on screen
     public void loadStocksFromFile() {
         try {
             stocks = jsonReader.read();
@@ -157,8 +231,11 @@ public class StockInvestmentAppGUI extends JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Unable to read from file: " + JSON_STORE);
         }
+        viewAllStocks();
     }
 
+    // EFFECTS: displays stocks that have been invested in, with their
+    // name, ticker symbol, share price, and investment status
     public void viewInvestedStocks() {
         listModel.clear();
         for (Stock stock : stocks.getStockItems()) {
@@ -170,6 +247,8 @@ public class StockInvestmentAppGUI extends JFrame {
         }
     }
 
+    // EFFECTS: displays all stocks in list, with their name,
+    // ticker symbol, share price, and investment status
     public void viewAllStocks() {
         listModel.clear();
         for (Stock stock : stocks.getStockItems()) {
