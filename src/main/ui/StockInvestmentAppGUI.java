@@ -141,7 +141,7 @@ public class StockInvestmentAppGUI extends JFrame {
         });
         addButton.setIcon(smallAddIcon);
 
-        saveButton = new JButton("Save Stocks");
+        saveButton = new JButton("Save Stocks To File");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -153,7 +153,7 @@ public class StockInvestmentAppGUI extends JFrame {
 
     // EFFECTS: creates Load and View buttons for the GUI
     public void createLoadAndViewButtons() {
-        loadButton = new JButton("Load Stocks");
+        loadButton = new JButton("Load Stocks From File");
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

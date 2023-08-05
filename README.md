@@ -19,3 +19,10 @@ and would find it very helpful to have an application like this.
 - As a user, I want to be able to record the cost of 1 share in a particular stock
 - As a user, I want to be able to save my stock list to file (if I so choose)
 - As a user, I want to be able to load my stock list from file (if I so choose)
+
+# Instructions for Grader
+- You can generate the first required action, which is adding stocks to the stocklist, by filling out the fields at the bottom of the window and clicking the button labeled "Add a stock"
+- You can generate the second required action, which is only viewing stocks you have invested in, by clicking the button labeled "View invested stocks"
+- You can locate my visual component by looking at the icons that I have added to all the buttons, and to the fields at the bottom of the window
+- You can save the state of my application by clicking the button labeled "Save Stocks To File"
+- You can reload the state of my application by clicking the button labeled "Load Stocks From File"
