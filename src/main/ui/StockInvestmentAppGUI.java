@@ -45,8 +45,7 @@ public class StockInvestmentAppGUI extends JFrame {
     public StockInvestmentAppGUI() {
         initializeValues();
 
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        createPanel();
 
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 5, 5));
         nameField = new JTextField();
@@ -77,6 +76,24 @@ public class StockInvestmentAppGUI extends JFrame {
         add(panel);
     }
 
+    // EFFECTS: creates an empty stocklist and its list model,
+    // and initializes JSON elements
+    public void initializeValues() {
+        stocks = new StockList("My stocklist");
+        listModel = new DefaultListModel<>();
+        stockList = new JList<>(listModel);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the main panel for the GUI
+    public void createPanel() {
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+    }
+
+    // EFFECTS: creates images for icons used in GUI
     public void createImages() {
         ImageIcon icon = new ImageIcon("data/stock-market-vector-icon-small.jpg",
                 "a stock icon");
@@ -101,16 +118,6 @@ public class StockInvestmentAppGUI extends JFrame {
         ImageIcon viewAllIcon = new ImageIcon("data/viewAllStocksIcon.jpg",
                 "a view all stock icon");
         smallViewAllIcon = new ImageIcon(getScaledImage(viewAllIcon.getImage(), 32, 32));
-    }
-
-    // EFFECTS: creates an empty stocklist and its list model,
-    // and initializes JSON elements
-    public void initializeValues() {
-        stocks = new StockList("My stocklist");
-        listModel = new DefaultListModel<>();
-        stockList = new JList<>(listModel);
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // EFFECTS: creates a new image with given width and height
@@ -164,6 +171,11 @@ public class StockInvestmentAppGUI extends JFrame {
         });
         viewInvestedButton.setIcon(smallViewInvestedIcon);
 
+        createViewAllButton();
+    }
+
+    // EFFECTS: creates view all button for GUI
+    public void createViewAllButton() {
         viewAllButton = new JButton("View All Stocks");
         viewAllButton.addActionListener(new ActionListener() {
             @Override

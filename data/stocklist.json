@@ -1,17 +1,9 @@
 {
-    "stockItems": [
-        {
-            "hasInvested": true,
-            "ticker": "aapl",
-            "sharePrice": 0,
-            "name": "apple"
-        },
-        {
-            "hasInvested": false,
-            "ticker": "sam",
-            "sharePrice": 0,
-            "name": "samsung"
-        }
-    ],
+    "stockItems": [{
+        "hasInvested": true,
+        "ticker": "sam",
+        "sharePrice": 0,
+        "name": "samsung"
+    }],
     "name": "My stocklist"
 }
