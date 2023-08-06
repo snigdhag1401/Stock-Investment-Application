@@ -250,12 +250,11 @@ public class StockInvestmentAppGUI extends JFrame {
     // name, ticker symbol, share price, and investment status
     public void viewInvestedStocks() {
         listModel.clear();
-        for (Stock stock : stocks.getStockItems()) {
-            if (stock.getInvestmentStatus()) {
-                listModel.addElement(stock.getStockName() + " ("
-                        + stock.getTicker() + " ) - Invested: "
-                        + stock.getInvestmentStatus() + " , Share Price = " + stock.getSharePrice());
-            }
+        StockList investedStocks = stocks.haveInvestedIn();
+        for (Stock stock : investedStocks.getStockItems()) {
+            listModel.addElement(stock.getStockName() + " ("
+                    + stock.getTicker() + " ) - Invested: "
+                    + stock.getInvestmentStatus() + " , Share Price = " + stock.getSharePrice());
         }
     }
 

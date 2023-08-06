@@ -1,7 +1,5 @@
-package modelTest;
+package model;
 
-import model.Stock;
-import model.StockList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

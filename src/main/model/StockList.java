@@ -55,6 +55,7 @@ public class StockList implements Writable {
                 investedIn.addStock(stockItem);
             }
         }
+
         return investedIn;
     }
 
