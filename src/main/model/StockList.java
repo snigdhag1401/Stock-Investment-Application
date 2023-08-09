@@ -25,6 +25,7 @@ public class StockList implements Writable {
     // EFFECTS: adds given stock to the list of stocks
     public void addStock(Stock stock) {
         stockItems.add(stock);
+        EventLog.getInstance().logEvent(new Event("Added stock " + stock.getStockName() + " to list!"));
     }
 
     // MODIFIES: this
@@ -50,12 +51,13 @@ public class StockList implements Writable {
     // EFFECTS: returns list of all stocks that have been invested in
     public StockList haveInvestedIn() {
         StockList investedIn = new StockList("Invested in stocks");
+        investedIn.getStockItems().addAll(stockItems);
         for (Stock stockItem : stockItems) {
-            if (stockItem.getInvestmentStatus()) {
-                investedIn.addStock(stockItem);
+            if (!stockItem.getInvestmentStatus()) {
+                investedIn.removeStock(stockItem);
             }
         }
-
+        EventLog.getInstance().logEvent(new Event("Viewed invested stocks"));
         return investedIn;
     }
 

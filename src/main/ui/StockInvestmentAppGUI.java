@@ -1,5 +1,7 @@
 package ui;
 
+import model.EventLog;
+import model.Event;
 import model.Stock;
 import model.StockList;
 import persistence.JsonReader;
@@ -7,11 +9,11 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 import javax.swing.JFrame;
 
 // Represents a stock investment app with a graphical user interface
@@ -31,6 +33,8 @@ public class StockInvestmentAppGUI extends JFrame {
     private JButton viewInvestedButton;
     private JButton viewAllButton;
     private JPanel panel;
+    private JPanel inputPanel;
+    private EventLog eventLog = EventLog.getInstance();
 
     private ImageIcon smallIcon;
     private ImageIcon smallAddIcon;
@@ -47,19 +51,11 @@ public class StockInvestmentAppGUI extends JFrame {
 
         createPanel();
 
-        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 5, 5));
-        nameField = new JTextField();
-        tickerField = new JTextField();
-        investmentCheckBox = new JCheckBox();
+        initializeInputPanel();
 
         createImages();
 
-        inputPanel.add(new JLabel("Stock name:", smallIcon, JLabel.CENTER));
-        inputPanel.add(nameField);
-        inputPanel.add(new JLabel("Ticker Symbol:",  smallIcon, JLabel.CENTER));
-        inputPanel.add(tickerField);
-        inputPanel.add(new JLabel("Investment Status:",  smallIcon, JLabel.CENTER));
-        inputPanel.add(investmentCheckBox);
+        createInputPanel();
 
         createAddAndSaveStockButtons();
         createLoadAndViewButtons();
@@ -70,10 +66,45 @@ public class StockInvestmentAppGUI extends JFrame {
         addButtonsToPanel();
 
         setTitle("Stock Investment Application");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(500,500);
         setLocationRelativeTo(null);
         add(panel);
+        makeWindowListener();
+    }
+
+    // EFFECTS: closes window, and prints out LogEvents to console
+    public void makeWindowListener() {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                System.out.println("Event Log: ");
+                Iterator<Event> itr = eventLog.iterator();
+                while (itr.hasNext()) {
+                    System.out.println(itr.next().getDescription());
+                }
+                System.exit(0);
+            }
+        });
+    }
+
+    // EFFECTS: creates panel for fields used to add stocks
+    public void initializeInputPanel() {
+        inputPanel = new JPanel(new GridLayout(4, 2, 5, 5));
+        nameField = new JTextField();
+        tickerField = new JTextField();
+        investmentCheckBox = new JCheckBox();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds proper labels and fields to input panel
+    public void createInputPanel() {
+        inputPanel.add(new JLabel("Stock name:", smallIcon, JLabel.CENTER));
+        inputPanel.add(nameField);
+        inputPanel.add(new JLabel("Ticker Symbol:",  smallIcon, JLabel.CENTER));
+        inputPanel.add(tickerField);
+        inputPanel.add(new JLabel("Investment Status:",  smallIcon, JLabel.CENTER));
+        inputPanel.add(investmentCheckBox);
     }
 
     // EFFECTS: creates an empty stocklist and its list model,
@@ -268,4 +299,5 @@ public class StockInvestmentAppGUI extends JFrame {
                     + stock.getInvestmentStatus() + " , Share Price = " + stock.getSharePrice());
         }
     }
+
 }

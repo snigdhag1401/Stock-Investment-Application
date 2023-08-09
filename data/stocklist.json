@@ -1,9 +1,4 @@
 {
-    "stockItems": [{
-        "hasInvested": true,
-        "ticker": "sam",
-        "sharePrice": 0,
-        "name": "samsung"
-    }],
+    "stockItems": [],
     "name": "My stocklist"
 }
