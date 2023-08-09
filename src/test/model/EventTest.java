@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EventTest {
     private Event e;
@@ -36,9 +35,24 @@ public class EventTest {
 
     @Test
     public void testEventEquals() {
+        Event testE = e;
+        assertTrue(e.equals(testE));
+        assertEquals(e.hashCode(), testE.hashCode());
+    }
+
+    @Test
+    public void testEventNotEqualsWithNull() {
         Event testE = null;
         Date testD = Calendar.getInstance().getTime();
         assertFalse(e.equals(testE));
+        assertNotEquals(e.hashCode(), testE.hashCode());
+    }
+
+    @Test
+    public void testEventNotEqualsWithDiffClass() {
+        StockList testStockList = new StockList("Added stock Apple to list!");
+        Date testD = Calendar.getInstance().getTime();
+        assertFalse(e.equals(testStockList));
     }
 }
 
