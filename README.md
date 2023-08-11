@@ -34,7 +34,7 @@ Added stock Samsung to list!
 
 ## Phase 4: Task 3
 In order to improve the design of my program, I would refactor things in my GUI class. An important change I would make is reducing
-coupling and repetition in my code, particularly in my viewInvestedStocks() and viewAllStocks() methods. These methods
+duplication and repetition in my code, particularly in my viewInvestedStocks() and viewAllStocks() methods. These methods
 both use a for each loop to iterate through a given list and display out information in the same format
 about the stocks in the list. I would change this code by making a new method that takes in a list as a parameter, and then does the same
 thing that the two view methods do (iterate through the list, and display stock information). I could then remove most of the code from the
